@@ -5,11 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HelpDesk.Models;
+using System.IO;
+using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace HelpDesk.Controllers
 {
     public class HomeController : Controller
     {
+
+        public IActionResult Indexx(int pagina){
+            OcorrenciaModel ocorrenciaModel = new OcorrenciaModel();
+            return Content($"pagina: {ocorrenciaModel.gerarNumero()}");
+        }
         public IActionResult Index()
         {
             return View();
@@ -17,7 +25,11 @@ namespace HelpDesk.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Your application description page. nome: ";
+            
+            OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Models.OcorrenciaContext)) as OcorrenciaContext;
+
+            ocorrenciaContext.addOcorrencia(new OcorrenciaModel(){ Descrição = "TEXTO GRANDE PACARALHO!"});
 
             return View();
         }

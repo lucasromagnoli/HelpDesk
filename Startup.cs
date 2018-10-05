@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HelpDesk.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +17,8 @@ namespace HelpDesk
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+
+           Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -29,10 +31,14 @@ namespace HelpDesk
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                
             });
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Add(new ServiceDescriptor(typeof(OcorrenciaContext), new OcorrenciaContext(Configuration.GetConnectionString("MySqlDefaultConnection"))));
+            //services.Add(new ServiceDescriptor(typeof(MusicStoreContext), new MusicStoreContext(Configuration.GetConnectionString("DefaultConnection"))));  
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
