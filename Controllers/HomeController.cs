@@ -28,9 +28,18 @@ namespace HelpDesk.Controllers
             ViewData["Message"] = "Your application description page. nome: ";
             
             OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Models.OcorrenciaContext)) as OcorrenciaContext;
+            Usuario usuario = new Usuario() {Id = 1, Login = "Lucas"};
+            Setor setor = new Setor() {Id = 1, Nome = "TI"};
+            OcorrenciaModel ocorrencia = new OcorrenciaModel(){
 
-            ocorrenciaContext.addOcorrencia(new OcorrenciaModel(){ Descrição = "TEXTO GRANDE PACARALHO!"});
+                DataDeRegistro = DateTime.UtcNow,
+                DataDeVencimento = DateTime.UtcNow,
+                Descrição = "DESCRIÇÃO!!!",
+                Usuario = usuario,
+                Setor = setor,
 
+            };
+            ocorrenciaContext.adicionaOcorrencia(ocorrencia);
             return View();
         }
 

@@ -34,10 +34,8 @@ namespace HelpDesk
                 
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.Add(new ServiceDescriptor(typeof(OcorrenciaContext), new OcorrenciaContext(Configuration.GetConnectionString("MySqlDefaultConnection"))));
-            //services.Add(new ServiceDescriptor(typeof(MusicStoreContext), new MusicStoreContext(Configuration.GetConnectionString("DefaultConnection"))));  
 
         }
 
