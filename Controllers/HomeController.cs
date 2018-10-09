@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HelpDesk.Models;
+using HelpDesk.Context;
 using System.IO;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
@@ -27,7 +28,7 @@ namespace HelpDesk.Controllers
         {
             ViewData["Message"] = "Your application description page. nome: ";
             
-            OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Models.OcorrenciaContext)) as OcorrenciaContext;
+            OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.OcorrenciaContext)) as OcorrenciaContext;
             Usuario usuario = new Usuario() {Id = 1, Login = "Lucas"};
             Setor setor = new Setor() {Id = 1, Nome = "TI"};
             OcorrenciaModel ocorrencia = new OcorrenciaModel(){
@@ -40,18 +41,25 @@ namespace HelpDesk.Controllers
 
             };
             ocorrenciaContext.adicionaOcorrencia(ocorrencia);
+
+
             return View();
         }
 
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
+            UsuarioContext usuarioContext = HttpContext.RequestServices.GetService(typeof(UsuarioContext) ) as UsuarioContext;
 
-            return View();
+
+            //return Content(usuarioContext.GetUsuario(1).Login);
+            return Content(usuarioContext.AutenticaUsuario("admin", "123456") ? "Sim" : "Não");
+            // return View();
         }
 
         public IActionResult Privacy()
         {
+
             return View();
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HelpDesk.Models;
+using HelpDesk.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,6 +37,7 @@ namespace HelpDesk
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.Add(new ServiceDescriptor(typeof(OcorrenciaContext), new OcorrenciaContext(Configuration.GetConnectionString("MySqlDefaultConnection"))));
+            services.Add(new ServiceDescriptor(typeof(UsuarioContext), new UsuarioContext(Configuration.GetConnectionString("MySqlDefaultConnection"))));
 
         }
 

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
-
-namespace HelpDesk.Models
+using HelpDesk.Models;
+namespace HelpDesk.Context
 {
     public class OcorrenciaContext
     {
@@ -12,6 +12,10 @@ namespace HelpDesk.Models
             this.ConnectionString = connectionString;
         }
 
+        private MySqlConnection GetConnection(){
+            return new MySqlConnection(ConnectionString);
+        }
+        
         public List<OcorrenciaModel> listaOcorrencia(Usuario usuario){
             List<OcorrenciaModel> list = new List<OcorrenciaModel>();
             using (MySqlConnection con = GetConnection()){
@@ -29,6 +33,7 @@ namespace HelpDesk.Models
                             DataDeEncerramento = reader.GetDateTime("dataencerramento_ocorrencia"),
                             Descrição = reader.GetString("descricao_ocorrencia"),
                             Status = (Status) reader.GetInt16("status_ocorrencia"),
+                            Nivel = reader.GetString("nivelatendimento_ocorrencia"),
                             Setor = new Setor(){Id = reader.GetInt32("id_setor"), Nome = reader.GetString("nome_setor")},
                             Usuario = usuario
                         });
@@ -55,6 +60,7 @@ namespace HelpDesk.Models
                         ocorrenciaModel.DataDeEncerramento = reader.GetDateTime("dataencerramento_ocorrencia");
                         ocorrenciaModel.Descrição = reader.GetString("descricao_ocorrencia");
                         ocorrenciaModel.Status = (Status) reader.GetInt16("status_ocorrencia");
+                        ocorrenciaModel.Nivel = reader.GetString("nivelatendimento_ocorrencia");
                         ocorrenciaModel.Setor = new Setor(){Id = reader.GetInt32("id_setor"), Nome = reader.GetString("nome_setor")};
                         ocorrenciaModel.Usuario = new Usuario(){Id = reader.GetInt32("id_usuario"), Login = reader.GetString("login_usuario")};  
                     }
@@ -62,9 +68,6 @@ namespace HelpDesk.Models
                 con.Close();
             }
             return ocorrenciaModel;
-        }
-        private MySqlConnection GetConnection(){
-            return new MySqlConnection(ConnectionString);
         }
 
         public void adicionaOcorrencia(OcorrenciaModel ocorrencia){

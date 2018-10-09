@@ -16,6 +16,7 @@ namespace HelpDesk.Models
         public Status Status { get; set; }
         public Usuario Usuario { get; set; }
         public Setor Setor { get; set; }
+        public string Nivel { get; set; }
         public List<Acompanhamento> Acompanhamentos = new List<Acompanhamento>();
 
         public OcorrenciaModel() {
@@ -23,7 +24,8 @@ namespace HelpDesk.Models
         }
         // Metodos
         public string gerarNumero(){
-            return  (new Random().Next(1, 9)+DateTime.Now.Millisecond.ToString()+DateTime.Now.Day.ToString()+DateTime.Now.Year.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString()+DateTime.Now.Second.ToString()+DateTime.Now.Month.ToString());
+            string numero = (DateTime.Now.Millisecond.ToString()+DateTime.Now.Day.ToString()+DateTime.Now.Year.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString()+DateTime.Now.Second.ToString()+DateTime.Now.Month.ToString());
+            return numero;
         }
     }
 }
