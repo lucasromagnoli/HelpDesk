@@ -2,8 +2,12 @@ namespace HelpDesk.Models
 {
     public class Acompanhamento
     {
-        public string Texto { get; set; }
-        public Funcionário funcionário { get; set; }
+        public int Id { get; set; }
+        public string Descricao { get; set; }
+        public Usuario Usuario { get; set; }
 
+        public override string  ToString(){
+            return "";
+        }
     }
 }

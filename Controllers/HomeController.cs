@@ -14,7 +14,6 @@ namespace HelpDesk.Controllers
 {
     public class HomeController : Controller
     {
-
         public IActionResult Indexx(int pagina){
             OcorrenciaModel ocorrenciaModel = new OcorrenciaModel();
             return Content($"pagina: {ocorrenciaModel.gerarNumero()}");
@@ -29,21 +28,10 @@ namespace HelpDesk.Controllers
             ViewData["Message"] = "Your application description page. nome: ";
             
             OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.OcorrenciaContext)) as OcorrenciaContext;
-            Usuario usuario = new Usuario() {Id = 1, Login = "Lucas"};
-            Setor setor = new Setor() {Id = 1, Nome = "TI"};
-            OcorrenciaModel ocorrencia = new OcorrenciaModel(){
-
-                DataDeRegistro = DateTime.UtcNow,
-                DataDeVencimento = DateTime.UtcNow,
-                Descrição = "DESCRIÇÃO!!!",
-                Usuario = usuario,
-                Setor = setor,
-
-            };
-            ocorrenciaContext.adicionaOcorrencia(ocorrencia);
+            ocorrenciaContext.getAcompanhamento("1");
 
 
-            return View();
+            return Content($@"{ocorrenciaContext.getAcompanhamento("12345678901234").ToArray()[0].Descricao}");
         }
 
         public IActionResult Contact()
@@ -60,7 +48,7 @@ namespace HelpDesk.Controllers
         public IActionResult Privacy()
         {
 
-            return View();
+            return Content("");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

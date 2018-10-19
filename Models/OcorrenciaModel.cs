@@ -21,6 +21,7 @@ namespace HelpDesk.Models
 
         public OcorrenciaModel() {
             this.Numero = gerarNumero();
+            this.Id = 0;
         }
         // Metodos
         public string gerarNumero(){
