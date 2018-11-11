@@ -32,4 +32,5 @@ C:\Users\lucas\Google Drive\PIM IV\HelpDesk\obj\Debug\netcoreapp2.1\HelpDesk.pdb
 C:\Users\lucas\Google Drive\PIM IV\HelpDesk\obj\Debug\netcoreapp2.1\HelpDesk.csproj.CopyComplete
 C:\Users\lucas\Google Drive\PIM IV\HelpDesk\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\Index.g.cshtml.cs
 C:\Users\lucas\Google Drive\PIM IV\HelpDesk\obj\Debug\netcoreapp2.1\Razor\Views\Ocorrencia\Exibir.g.cshtml.cs
-C:\Users\lucas\Google Drive\PIM IV\HelpDesk\obj\Debug\netcoreapp2.1\Razor\Views\Ocorrencia\Exibir2.g.cshtml.cs
+C:\Users\lucas\Google Drive\PIM IV\HelpDesk\obj\Debug\netcoreapp2.1\Razor\Views\Ocorrencia\Cadastrar.g.cshtml.cs
+C:\Users\lucas\Google Drive\PIM IV\HelpDesk\obj\Debug\netcoreapp2.1\Razor\Views\Ocorrencia\Alterar.g.cshtml.cs

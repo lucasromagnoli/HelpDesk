@@ -62,7 +62,7 @@ namespace HelpDesk
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Usuario}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

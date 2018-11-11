@@ -1,29 +1,21 @@
-﻿@model HelpDesk.Models.OcorrenciaModel
+@model HelpDesk.Models.OcorrenciaModel
 
 @{
-    ViewData["Title"] = "Exibir";
+    ViewData["Title"] = "Alterar";
 }
     @{
         if ((bool)ViewData["Encontrada"]) // Ocorrência encontrada.
         {
-
-            @if ((bool)ViewData["Cadastrado"] || (bool)ViewData["Alterado"]) {
-                <div class="alert alert-success alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                Ocorrência <strong>@Model.Numero</strong> @if((bool)ViewData["Cadastrado"]){<strong>aberta</strong>}else{<strong>alterada</strong>} com sucesso!
-                </div>
-            }
-
-            <form>
+            <form method="POST">
                 <input name="input" type="hidden" value=1>
                 <div class="form-group">
                     <label>Id</label>
-                    <input type="text" class="form-control" value = "@Model.Id" readonly />
+                    <input type="text" name = "Id" class="form-control" value = "@Model.Id" readonly />
                 </div>
 
                 <div class="form-group">
                     <label>Numero</label>
-                    <input type="number" class="form-control" value = "@Model.Numero" required/>
+                    <input name="Numero" type="number" class="form-control" value = "@Model.Numero" readonly
                 </div>
 
                 <div class="form-group">
@@ -58,46 +50,43 @@
                 </div>
 
                 <div class="form-group">
-                    <label> Status: </label>
-                    <input type="text" class="form-control" value = "@Model.Status" readonly />
+                    <label>Status:</label>
+                    <select name="Status" class="form-control">
+                        <option>Pendente</option>
+                        <option>Resolvida</option>
+                        <option>Cancelada</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label> Nivel: </label>
-                    <input type="text" class="form-control" value = "@Model.Nivel" readonly />
+                    <input name="Nivel" type="number" class="form-control" value = "@Model.Nivel" min="1" max="3" value = "@Model.Nivel"/>
                 </div>
                 
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#descricao">Descrição</a></li>
-                    @if (@Model.Acompanhamentos.ToArray().Length >= 1){
-                        <li><a data-toggle="tab" href="#acompanhamentos">Acompanhamentos</a></li>
-                    }
+                    <li><a data-toggle="tab" href="#acompanhamentos">Adicionar acompanhamento</a></li>
                 </ul>
+
                 <div class="tab-content">
                     <div id="descricao" class="tab-pane fade in active">
                         <div class="form-group">
                             <textarea class="form-control" rows="3" readonly > @Model.Descricao </textarea>
                         </div>
                     </div>
-                        @if (@Model.Acompanhamentos.ToArray().Length >= 1){
                             <div id="acompanhamentos" class="tab-pane fade">
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="3" readonly >
-                                            @for (var i = 0; i < @Model.Acompanhamentos.ToArray().Length; i++) { 
-                                                @Model.Acompanhamentos.ToArray()[i]
-                                            }
-                                    </textarea>
+                                    <textarea name="acompanhamento" class="form-control" rows="6" >Coloque aqui a descrição</textarea>
                                 </div>
                             </div>
-                        }
                 </div>
 
-                <button type="submit" class="btn btn-primary">Buscar</button>
+                <button type="submit" class="btn btn-primary">Gravar</button>
 
             </form>
 
         }
-    else 
+    else
     {
         
             @if ((bool)ViewData["MostrarErro"]) {

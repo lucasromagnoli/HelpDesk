@@ -12,13 +12,12 @@ namespace HelpDesk.Controllers
             return View();
         }
 
-        public IActionResult Cadastrar(){
-            return View();
-        }
-
-        public IActionResult Exibir(string ocorrencia, int? input) {
+        [HttpGet]
+        public IActionResult Alterar(string ocorrencia, int? input){
             OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.OcorrenciaContext)) as OcorrenciaContext;
-            OcorrenciaModel oc = ocorrenciaContext.getOcorrencia(ocorrencia);
+            UsuarioContext usuarioContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.UsuarioContext)) as UsuarioContext;
+
+            OcorrenciaModel oc = ocorrenciaContext.getOcorrencia(ocorrencia, usuarioContext);
             ViewData["MostrarErro"] = false;
             if (oc.Id == 0) // Nenhuma ocorrência encontrada.
             {
@@ -26,24 +25,61 @@ namespace HelpDesk.Controllers
                 if (input == 1){
                     ViewData["MostrarErro"] = true;
                 }
-
             }
-            else {
+            else
+            {
                 ViewData["Encontrada"] = true;
             }
-
-
-            Console.WriteLine($"vaitomar no cu {input}");
+            
             return View(oc);
         }
 
         [HttpPost]
-        public IActionResult Cadastrar(OcorrenciaModel ocorrencia){
+        public IActionResult Alterar(OcorrenciaModel ocorrenciaModel, string acompanhamento){
             OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.OcorrenciaContext)) as OcorrenciaContext;
-            
-            ocorrenciaContext.adicionaOcorrencia(ocorrencia);
+            Acompanhamento tempAcompanhamento = new Acompanhamento(){Descricao = acompanhamento, Usuario = new Usuario() {Id = 1}};
+            ocorrenciaContext.adicionaAcompanhamento(tempAcompanhamento,ocorrenciaModel);
+            return RedirectToAction("Exibir", new { ocorrencia = ocorrenciaModel.Numero, alterado = "1"} );
+        }
 
+        [HttpGet]
+        public IActionResult Cadastrar(){
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Cadastrar(OcorrenciaModel ocorrenciaModel, string categoriaNome){
+            OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.OcorrenciaContext)) as OcorrenciaContext;
+            ocorrenciaModel.Categoria = categoriaNome;
+            ocorrenciaModel.Usuario = new Usuario() {Id = 1};
+            ocorrenciaContext.adicionaOcorrencia(ocorrenciaModel);
+
+            return RedirectToAction("Exibir", new { ocorrencia = ocorrenciaModel.Numero, cadastrado = "1"} );
+        }
+        public IActionResult Exibir(string ocorrencia, int? input, int? cadastrado, int? alterado) {
+            OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.OcorrenciaContext)) as OcorrenciaContext;
+            UsuarioContext usuarioContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.UsuarioContext)) as UsuarioContext;
+
+            OcorrenciaModel oc = ocorrenciaContext.getOcorrencia(ocorrencia, usuarioContext);
+            ViewData["MostrarErro"] = false;
+            ViewData["Cadastrado"] = false;
+            ViewData["Alterado"] = false;
+            if (oc.Id == 0) // Nenhuma ocorrência encontrada.
+            {
+                ViewData["Encontrada"] = false;
+                if (input == 1){
+                    ViewData["MostrarErro"] = true;
+                }
+            }
+            else {
+                ViewData["Encontrada"] = true;
+                if (cadastrado == 1)
+                ViewData["Cadastrado"] = true;
+                if (alterado == 1)
+                ViewData["Alterado"] = true;
+            }
+            
+            return View(oc);
         }
     }
 }

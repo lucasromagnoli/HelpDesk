@@ -28,10 +28,11 @@ namespace HelpDesk.Controllers
             ViewData["Message"] = "Your application description page. nome: ";
             
             OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.OcorrenciaContext)) as OcorrenciaContext;
-            ocorrenciaContext.getAcompanhamento("1");
+            //ocorrenciaContext.getAcompanhamento("1");
 
 
-            return Content($@"{ocorrenciaContext.getAcompanhamento("12345678901234").ToArray()[0].Descricao}");
+            //return Content($@"{ocorrenciaContext.getAcompanhamento("12345678901234").ToArray()[0].Descricao}");
+            return View();
         }
 
         public IActionResult Contact()
