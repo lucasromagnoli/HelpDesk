@@ -62,12 +62,12 @@ using HelpDesk.Models;
             WriteLiteral("\r\n\r\n");
             EndContext();
             BeginContext(49, 604, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c5f2d692b5cb435da0255416d2835b89", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "24f6afcfb3814df78b06b40f1c6080dd", async() => {
                 BeginContext(69, 197, true);
                 WriteLiteral("\r\n\r\n\r\n    <div class=\"form-group\">\r\n        <label>Categoria:</label>\r\n        <select name = \"categoriaNome\"class=\"form-control\">\r\n        <optgroup label=\"Tecnologia da Informação\">\r\n            ");
                 EndContext();
                 BeginContext(266, 39, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "330b7065d8fd4c6082a15de39d003c64", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8148f6a6069f40619be9a4a143b604c3", async() => {
                     BeginContext(274, 22, true);
                     WriteLiteral("Problemas com hardware");
                     EndContext();
@@ -87,7 +87,7 @@ using HelpDesk.Models;
                 WriteLiteral("\r\n            ");
                 EndContext();
                 BeginContext(319, 39, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "91ac9648a9b44b92a142dc74efd23e58", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5e49b8ce1ed248dcaee93b816b096501", async() => {
                     BeginContext(327, 22, true);
                     WriteLiteral("Problemas com software");
                     EndContext();

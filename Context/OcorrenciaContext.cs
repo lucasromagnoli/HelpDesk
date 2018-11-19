@@ -18,7 +18,7 @@ namespace HelpDesk.Context
             return new MySqlConnection(ConnectionString);
         }
         
-        public void adicionaAcompanhamento(Acompanhamento acompanhamento, OcorrenciaModel ocorrencia){
+        public void adicionaAcompanhamento(AcompanhamentoModel acompanhamento, OcorrenciaModel ocorrencia){
             using (MySqlConnection con = GetConnection()){
                 con.Open();
                 string sql = "INSERT INTO ACOMPANHAMENTO (DESCRICAO_ACOMPANHAMENTO, ID_USUARIO_ACOMPANHAMENTO, ID_OCORRENCIA_ACOMPANHAMENTO, DATAABERTURA_ACOMPANHAMENTO) VALUES (?DESCRICAO_ACOMPANHAMENTO, ?ID_USUARIO_ACOMPANHAMENTO, ?ID_OCORRENCIA_ACOMPANHAMENTO, ?DATAABERTURA_ACOMPANHAMENTO);";
@@ -38,9 +38,9 @@ namespace HelpDesk.Context
             }
         }
 
-        public List<Acompanhamento> getAcompanhamento(String numero, UsuarioContext usuarioContext){
+        public List<AcompanhamentoModel> getAcompanhamento(String numero, UsuarioContext usuarioContext){
             
-            List<Acompanhamento> list = new List<Acompanhamento>();
+            List<AcompanhamentoModel> list = new List<AcompanhamentoModel>();
 
             using (MySqlConnection con = GetConnection()){
                 con.Open();
@@ -49,7 +49,7 @@ namespace HelpDesk.Context
                 cmd.Parameters.AddWithValue("?numero", numero);
                 using (MySqlDataReader reader = cmd.ExecuteReader()){
                     while (reader.Read()){
-                        list.Add(new Acompanhamento(){
+                        list.Add(new AcompanhamentoModel(){
                             Id = reader.GetInt32("id_acompanhamento"),
                             Descricao = reader.GetString("descricao_acompanhamento"),
                             DataAbertura = reader.GetDateTime("dataabertura_acompanhamento"),
@@ -59,36 +59,6 @@ namespace HelpDesk.Context
                 }
             }
 
-            return list;
-        }
-
-        public List<OcorrenciaModel> listaOcorrencia(Usuario usuario){
-            List<OcorrenciaModel> list = new List<OcorrenciaModel>();
-            using (MySqlConnection con = GetConnection()){
-                con.Open();
-                string sql = "SELECT ID_OCORRENCIA, OC.NUMERO_OCORRENCIA, OC.DATAREGISTRO_OCORRENCIA, OC.CATEGORIA_OCORRENCIA, OC.DATAVENCIMENTO_OCORRENCIA, OC.DATAENCERRAMENTO_OCORRENCIA, OC.STATUS_OCORRENCIA, OC.DESCRICAO_OCORRENCIA, SE.ID_SETOR, SE.NOME_SETOR FROM OCORRENCIA OC INNER JOIN SETOR SE ON OC.ID_SETOR_OCORRENCIA = SE.ID_SETOR WHERE OC.ID_USUARIO_OCORRENCIA = ?idusuario;";  
-                MySqlCommand cmd = new MySqlCommand(sql, con);
-                cmd.Parameters.AddWithValue("?idusuario", usuario.Id);
-                using (MySqlDataReader reader = cmd.ExecuteReader()){
-                    while (reader.Read()){
-                        list.Add(new OcorrenciaModel(){
-                            Id = reader.GetInt32("id_ocorrencia"),
-                            Numero = reader.GetString("numero_ocorrencia"),
-                            DataDeRegistro = reader.GetDateTime("dataregistro_ocorrencia"),
-                            DataDeVencimento = reader.GetDateTime("datavencimento_ocorrencia"),
-                            DataDeEncerramento = reader.GetDateTime("dataencerramento_ocorrencia"),
-                            Descricao = reader.GetString("descricao_ocorrencia"),
-                            Status = (Status) reader.GetInt16("status_ocorrencia"),
-                            Nivel = reader.GetString("nivelatendimento_ocorrencia"),
-                            Categoria = reader.GetString("categoria_ocorrencia"),
-                            Setor = new Setor(){Id = reader.GetInt32("id_setor"), Nome = reader.GetString("nome_setor")},
-                            Usuario = usuario,
-                            //Acompanhamentos = getAcompanhamento(reader.GetString("numero_ocorrencia"))
-                        });
-                    }
-                }
-                con.Close();
-            }
             return list;
         }
 
@@ -110,8 +80,8 @@ namespace HelpDesk.Context
                             ocorrenciaModel.Descricao = reader.GetString("descricao_ocorrencia");
                             ocorrenciaModel.Status = (Status) reader.GetInt16("status_ocorrencia");
                             ocorrenciaModel.Nivel = reader.GetString("nivelatendimento_ocorrencia");
-                            ocorrenciaModel.Setor = new Setor(){Id = reader.GetInt32("id_setor"), Nome = reader.GetString("nome_setor")};
-                            ocorrenciaModel.Usuario = new Usuario(){Id = reader.GetInt32("id_usuario"), Login = reader.GetString("login_usuario")};
+                            ocorrenciaModel.Setor = new SetorModel(){Id = reader.GetInt32("id_setor"), Nome = reader.GetString("nome_setor")};
+                            ocorrenciaModel.Usuario = new UsuarioModel(){Id = reader.GetInt32("id_usuario"), Login = reader.GetString("login_usuario")};
                             ocorrenciaModel.Categoria = reader.GetString("categoria_ocorrencia");
                             ocorrenciaModel.Acompanhamentos = getAcompanhamento(numero, usuarioContext);  
                         }

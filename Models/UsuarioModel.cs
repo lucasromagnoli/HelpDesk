@@ -1,6 +1,6 @@
 namespace HelpDesk.Models
 {
-    public class Usuario : Funcionário
+    public class UsuarioModel : FuncionarioModel
     {
         public int Id { get; set; }
         public string Login { get; set; }

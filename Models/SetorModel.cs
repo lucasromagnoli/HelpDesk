@@ -1,6 +1,6 @@
 namespace HelpDesk.Models
 {
-    public class Setor
+    public class SetorModel
     {
         public int Id { get; set; }
         public string Nome { get; set; }

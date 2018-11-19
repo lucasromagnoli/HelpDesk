@@ -15,8 +15,8 @@ namespace HelpDesk.Context
             return new MySqlConnection(ConnectionString);
         }
 
-        public Usuario GetUsuario(string login){
-            Usuario usuario = new Usuario();
+        public UsuarioModel GetUsuario(string login){
+            UsuarioModel usuario = new UsuarioModel();
             using (MySqlConnection con = GetConnection()){
                 con.Open();
                 string sql = "SELECT US.ID_USUARIO, US.LOGIN_USUARIO, US.NIVELATENDIMENTO_USUARIO, FU.NOME_FUNCIONARIO, FU.DATANASCIMENTO_FUNCIONARIO, FU.CPF_FUNCIONARIO, FU.RG_FUNCIONARIO, SE.ID_SETOR, SE.NOME_SETOR FROM USUARIO US INNER JOIN FUNCIONARIO FU ON US.ID_FUNCIONARIO_USUARIO = FU.ID_FUNCIONARIO INNER JOIN SETOR SE ON FU.ID_SETOR_FUNCIONARIO = SE.ID_SETOR WHERE US.LOGIN_USUARIO = ?login;";
@@ -31,7 +31,7 @@ namespace HelpDesk.Context
                         usuario.Cpf = reader.GetString("cpf_funcionario");
                         usuario.Rg = reader.GetString("rg_funcionario");
                         usuario.DataDeNascimento = reader.GetDateTime("datanascimento_funcionario");
-                        usuario.Setor = new Setor(){Id = reader.GetInt32("id_setor"), Nome = reader.GetString("nome_setor")};
+                        usuario.Setor = new SetorModel(){Id = reader.GetInt32("id_setor"), Nome = reader.GetString("nome_setor")};
                     }
                 } 
                 con.Close();
@@ -39,9 +39,9 @@ namespace HelpDesk.Context
             return usuario;
         } 
 
-        public Usuario GetUsuario(int id){
+        public UsuarioModel GetUsuario(int id){
             
-            Usuario usuario = new Usuario();
+            UsuarioModel usuario = new UsuarioModel();
             using (MySqlConnection con = GetConnection()){
                 con.Open();
                 string sql = "SELECT US.ID_USUARIO, US.LOGIN_USUARIO, US.NIVELATENDIMENTO_USUARIO, FU.NOME_FUNCIONARIO, FU.DATANASCIMENTO_FUNCIONARIO, FU.CPF_FUNCIONARIO, FU.RG_FUNCIONARIO, SE.ID_SETOR, SE.NOME_SETOR FROM USUARIO US INNER JOIN FUNCIONARIO FU ON US.ID_FUNCIONARIO_USUARIO = FU.ID_FUNCIONARIO INNER JOIN SETOR SE ON FU.ID_SETOR_FUNCIONARIO = SE.ID_SETOR WHERE US.ID_USUARIO = ?id;";
@@ -56,7 +56,7 @@ namespace HelpDesk.Context
                         usuario.Cpf = reader.GetString("cpf_funcionario");
                         usuario.Rg = reader.GetString("rg_funcionario");
                         usuario.DataDeNascimento = reader.GetDateTime("datanascimento_funcionario");
-                        usuario.Setor = new Setor(){Id = reader.GetInt32("id_setor"), Nome = reader.GetString("nome_setor")};
+                        usuario.Setor = new SetorModel(){Id = reader.GetInt32("id_setor"), Nome = reader.GetString("nome_setor")};
                     }
                 } 
                 con.Close();

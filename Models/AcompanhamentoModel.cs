@@ -2,14 +2,14 @@ using System;
 
 namespace HelpDesk.Models
 {
-    public class Acompanhamento
+    public class AcompanhamentoModel
     {
         public int Id { get; set; }
         public string Descricao { get; set; }
         public DateTime DataAbertura { get; set; }
-        public Usuario Usuario { get; set; }
+        public UsuarioModel Usuario { get; set; }
 
-        public Acompanhamento(){
+        public AcompanhamentoModel(){
             this.DataAbertura = DateTime.Now;
         }
         public override string  ToString(){

@@ -37,7 +37,7 @@ namespace HelpDesk.Controllers
         [HttpPost]
         public IActionResult Alterar(OcorrenciaModel ocorrenciaModel, string acompanhamento){
             OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.OcorrenciaContext)) as OcorrenciaContext;
-            Acompanhamento tempAcompanhamento = new Acompanhamento(){Descricao = acompanhamento, Usuario = new Usuario() {Id = 1}};
+            AcompanhamentoModel tempAcompanhamento = new AcompanhamentoModel(){Descricao = acompanhamento, Usuario = new UsuarioModel() {Id = 1}};
             ocorrenciaContext.adicionaAcompanhamento(tempAcompanhamento,ocorrenciaModel);
             return RedirectToAction("Exibir", new { ocorrencia = ocorrenciaModel.Numero, alterado = "1"} );
         }
@@ -51,7 +51,7 @@ namespace HelpDesk.Controllers
         public IActionResult Cadastrar(OcorrenciaModel ocorrenciaModel, string categoriaNome){
             OcorrenciaContext ocorrenciaContext = HttpContext.RequestServices.GetService(typeof(HelpDesk.Context.OcorrenciaContext)) as OcorrenciaContext;
             ocorrenciaModel.Categoria = categoriaNome;
-            ocorrenciaModel.Usuario = new Usuario() {Id = 1};
+            ocorrenciaModel.Usuario = new UsuarioModel() {Id = 1};
             ocorrenciaContext.adicionaOcorrencia(ocorrenciaModel);
 
             return RedirectToAction("Exibir", new { ocorrencia = ocorrenciaModel.Numero, cadastrado = "1"} );
